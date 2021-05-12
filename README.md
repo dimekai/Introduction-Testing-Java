@@ -74,6 +74,55 @@ public class PlayerTest {
 > 
 > Nota 3: **`Mockito`** permite simular el comportamiento de una clase de forma dinámica, sin necesidad de crearla directamente.
 
+5. Considerando que se reutilice codigo en mas de una de las pruebas unitarias, es decir, fragmentos de codigo utilizado en mas de un metodo, podemos inicializarlos antes que se ejecuten todos los test utilizando la notacion **`@Before`**, tal y como se muestra en el ejemplo de la _pasarela de pagos_ dentro del `package` **`Payments`**:
+
+```java
+package payments;
+
+import static org.junit.Assert.*;
+import org.junit.Test;
+import org.junit.Before;
+import org.mockito.Mockito;
+
+/**
+ *
+ * @author Jesus Diaz
+ */
+public class PaymentProcessorTest {
+
+    private PaymentGateway paymentGateway;
+    private PaymentProcessor paymentProcessor;
+
+    @Before
+    public void setup() {
+        paymentGateway = Mockito.mock(PaymentGateway.class);
+        paymentProcessor = new PaymentProcessor(paymentGateway);
+    }
+
+    @Test
+    public void payment_is_correct() { 
+
+        // Preparacion del escenario
+        Mockito.when(paymentGateway.requestPayment(Mockito.any()))
+                .thenReturn(new PaymentResponse(PaymentResponse.PaymentStatus.OK));
+
+        // Probar el metodo y comprobacion del test
+        assertTrue(paymentProcessor.makePayment(1584));
+    }
+
+    @Test
+    public void payment_is_wrong() {
+
+        Mockito.when(paymentGateway.requestPayment(Mockito.any()))
+                .thenReturn(new PaymentResponse(PaymentResponse.PaymentStatus.ERROR));
+
+        assertFalse(paymentProcessor.makePayment(1584));
+    }
+
+}
+ ```
+
+
 ## TDD
 * Desarrollo guiado por tests
 * Creado por Kent Beck
