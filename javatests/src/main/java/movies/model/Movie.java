@@ -1,5 +1,7 @@
 package movies.model;
 
+import java.util.Objects;
+
 /**
  *
  * @author Jesus Diaz
@@ -53,7 +55,29 @@ public class Movie {
     public void setGenre(Genre genre) {
         this.genre = genre;
     }
-    
-    
-    
+
+    // Usamos equals para comparar objetos
+    // Usado en el test de la bd con jdbctemplate
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, minutes, genre);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        final Movie other = (Movie) obj;
+
+        return !(this.minutes != other.minutes
+                && !Objects.equals(this.name, other.name)
+                && !Objects.equals(this.id, other.id)
+                && this.genre != other.genre);
+    }
+
 }
