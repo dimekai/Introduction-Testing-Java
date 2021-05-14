@@ -1,16 +1,18 @@
 package movies.service;
 
 import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-import movies.data.MovieRepository;
-import movies.model.*;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.mockito.Mockito;
+
+import movies.data.MovieRepository;
+import movies.model.*;
 
 /**
  *
