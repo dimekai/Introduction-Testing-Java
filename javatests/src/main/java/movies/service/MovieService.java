@@ -11,14 +11,13 @@ import movies.model.*;
  */
 public class MovieService {
 
-    private MovieRepository movieRepository;
+    private final MovieRepository movieRepository;
 
     public MovieService(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
     }
 
     public Collection<Movie> findMoviesByGenre(Genre genre) {
-
         return this.movieRepository.findAll().stream()
                 .filter(movie -> movie.getGenre() == genre).collect(Collectors.toList());
     }
@@ -26,6 +25,16 @@ public class MovieService {
     public Collection<Movie> findMoviesByTime(int minutes) {
         return this.movieRepository.findAll().stream()
                 .filter(movie -> movie.getMinutes() <= minutes).collect(Collectors.toList());
+    }
+    
+    public Collection<Movie> findMovieByName(String name) {
+        return this.movieRepository.findAll().stream()
+                .filter(movie -> movie.getName().toLowerCase().contains(name.toLowerCase())).collect(Collectors.toList());
+    }
+    
+    public Collection<Movie> findMovieByDirector(String director) {
+        return this.movieRepository.findAll().stream()
+                .filter(movie -> movie.getDirector().toLowerCase().contains(director.toLowerCase())).collect(Collectors.toList());
     }
 
 }
