@@ -6,7 +6,6 @@ import java.util.Collection;
 import movies.model.Genre;
 import movies.model.Movie;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
 public class MovieRepositoryJdbc implements MovieRepository {
@@ -36,16 +35,19 @@ public class MovieRepositoryJdbc implements MovieRepository {
             return new Movie(rs.getInt("id"),
                     rs.getString("name"),
                     rs.getInt("minutes"),
-                    Genre.valueOf(rs.getString("genre")));
+                    Genre.valueOf(rs.getString("genre")),
+                    rs.getString("director")
+            );
         }
     };
 
     @Override
     public void saveOrUpdate(Movie movie) {
-        jdbcTemplates.update("INSERT INTO Movies (NAME, MINUTES, GENRE) VALUES (?, ?, ?)",
+        jdbcTemplates.update("INSERT INTO Movies (NAME, MINUTES, GENRE, DIRECTOR) VALUES (?, ?, ?, ?)",
                 movie.getName(),
                 movie.getMinutes(),
-                movie.getGenre().toString()
+                movie.getGenre().toString(),
+                movie.getDirector()
         );
     }
 
