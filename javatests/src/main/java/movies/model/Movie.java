@@ -12,16 +12,18 @@ public class Movie {
     private String name;
     private int minutes;
     private Genre genre;
+    private String director;
 
-    public Movie(String name, int minutes, Genre genre) {
-        this(null, name, minutes, genre); // Llama al constructor de abajo
+    public Movie(String name, int minutes, Genre genre, String director) {
+        this(null, name, minutes, genre, director); // Llama al constructor de abajo
     }
 
-    public Movie(Integer id, String name, int minutes, Genre genre) {
+    public Movie(Integer id, String name, int minutes, Genre genre, String director) {
         this.id = id;
         this.name = name;
         this.minutes = minutes;
         this.genre = genre;
+        this.director = director;
     }
 
     public Integer getId() {
@@ -56,11 +58,19 @@ public class Movie {
         this.genre = genre;
     }
 
+    public String getDirector() {
+        return director;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
+    }
+
     // Usamos equals para comparar objetos
     // Usado en el test de la bd con jdbctemplate
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, minutes, genre);
+        return Objects.hash(id, name, minutes, genre, director);
     }
 
     @Override
@@ -77,7 +87,8 @@ public class Movie {
         return !(this.minutes != other.minutes
                 && !Objects.equals(this.name, other.name)
                 && !Objects.equals(this.id, other.id)
-                && this.genre != other.genre);
+                && this.genre != other.genre
+                && !Objects.equals(this.director, other.director));
     }
 
 }
