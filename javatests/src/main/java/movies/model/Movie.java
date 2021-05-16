@@ -10,7 +10,7 @@ public class Movie {
 
     private Integer id;
     private String name;
-    private int minutes;
+    private Integer minutes;
     private Genre genre;
     private String director;
 
@@ -42,11 +42,11 @@ public class Movie {
         this.name = name;
     }
 
-    public int getMinutes() {
+    public Integer getMinutes() {
         return minutes;
     }
 
-    public void setMinutes(int minutes) {
+    public void setMinutes(Integer minutes) {
         this.minutes = minutes;
     }
 
@@ -84,7 +84,7 @@ public class Movie {
 
         final Movie other = (Movie) obj;
 
-        return !(this.minutes != other.minutes
+        return !(!Objects.equals(this.minutes, other.minutes)
                 && !Objects.equals(this.name, other.name)
                 && !Objects.equals(this.id, other.id)
                 && this.genre != other.genre
